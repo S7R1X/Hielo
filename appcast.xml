@@ -3,6 +3,28 @@
     <channel>
         <title>Hielo</title>
         <item>
+            <title>1.2.0</title>
+            <pubDate>Wed, 04 Nov 2026 23:30:23 -0400</pubDate>
+            <link>https://github.com/S7R1X/Hielo</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/S7R1X/Hielo/releases/tag/v1.2.0</sparkle:fullReleaseNotesLink>
+            <sparkle:version>1123</sparkle:version>
+            <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<html><body>
+<h2>Novedades</h2>
+<li>Nuevo aspecto de la ventana de ajustes: el azul del icono de fondo, el Illimani como marca de agua y la bandera de Bolivia.</li>
+<li>Botón <b>Buy me a coffee</b> en *Acerca de*, para apoyar el proyecto.</li>
+
+<h2>Instalación</h2>
+<li><b>Homebrew:</b> <code>brew tap S7R1X/tap && brew trust S7R1X/tap && brew install --cask hielo</code></li>
+<li><b>Manual:</b> descarga <code>Hielo-1.2.0.zip</code>, descomprímelo y mueve <code>Hielo.app</code> a Aplicaciones.</li>
+
+<p><em>Hielo no está notarizado por Apple. La primera vez: clic derecho sobre la app → <b>Abrir</b> → <b>Abrir</b>. Después concede los permisos de <b>Accesibilidad</b> y <b>Grabación de pantalla</b>.</em></p>
+</body></html>
+]]></description>
+            <enclosure url="https://github.com/S7R1X/Hielo/releases/download/v1.2.0/Hielo-1.2.0.zip" length="5338799" type="application/octet-stream" sparkle:edSignature="KNntchwX+Zj8MjzIlZ+zDupE1gdkNUhswHVubD4RBqSqYqSaLlaX+f32uUrPz2gcmziIFwS69Yap3haFhCu+Cw=="/>
+        </item>
+        <item>
             <title>1.1.0</title>
             <pubDate>Wed, 04 Nov 2026 22:38:47 -0400</pubDate>
             <link>https://github.com/S7R1X/Hielo</link>
