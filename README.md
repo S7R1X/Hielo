@@ -30,8 +30,12 @@ macOS 27, localized to Spanish and English, with a few features of its own.*
 
 ```bash
 brew tap S7R1X/tap
+brew trust S7R1X/tap
 brew install --cask hielo
 ```
+
+`brew trust` hace falta una sola vez: las versiones recientes de Homebrew piden confirmar los
+taps que no son oficiales.
 
 ### Descarga directa
 
