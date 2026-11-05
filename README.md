@@ -63,6 +63,19 @@ bash build_install.sh
 
 El script compila la app, la firma, la instala en `/Applications/Hielo.app` y la abre.
 
+## Publicar una versión
+
+Con el árbol de git limpio, `gh` con sesión iniciada y el tap clonado en `../homebrew-tap`:
+
+```bash
+bash release.sh 1.1.0
+```
+
+Pone la versión en el proyecto, compila, firma, comprime, instala, hace commit y etiqueta,
+crea la Release en GitHub con el zip y actualiza el cask de Homebrew. `--notes archivo.md`
+usa tus propias notas (si no, se generan de los commits), `--no-install` no toca
+`/Applications`, y `--dry-run` hace todo menos git y GitHub, para probar.
+
 ## Créditos y licencia
 
 - **Hielo** — © 2026 Mauricio Chumacero.
