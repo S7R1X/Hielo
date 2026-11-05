@@ -24,7 +24,30 @@ macOS 27, localized to Spanish and English, with a few features of its own.*
 - Interfaz en **español** e **inglés**; icono del **Illimani**.
 - Sin actualizaciones automáticas del Ice original (reemplazarían a Hielo).
 
-## Compilar e instalar
+## Instalar
+
+### Con Homebrew
+
+```bash
+brew tap S7R1X/tap
+brew install --cask hielo
+```
+
+### Descarga directa
+
+Descarga `Hielo-x.y.z.zip` de la [última versión](https://github.com/S7R1X/Hielo/releases/latest),
+descomprímelo y mueve `Hielo.app` a tu carpeta `Aplicaciones`.
+
+### Al abrirla por primera vez
+
+Hielo no está firmado con un certificado de desarrollador de Apple ni notarizado, así que
+macOS mostrará *"no se puede abrir porque proviene de un desarrollador no identificado"*.
+Para abrirlo: clic derecho sobre `Hielo.app` → **Abrir** → **Abrir**, o bien en
+*Ajustes del Sistema → Privacidad y seguridad* pulsa **Abrir de todos modos**. Solo hace
+falta la primera vez. Después, Hielo pedirá los permisos de **Accesibilidad** y
+**Grabación de pantalla**, que necesita para gestionar la barra y mostrar los iconos.
+
+## Compilar desde el código
 
 Requiere Xcode 27 o posterior y un certificado de firma local llamado `Ice Local Signing`
 en el llavero (un certificado autofirmado de *firma de código*; con él los permisos de
@@ -35,7 +58,6 @@ bash build_install.sh
 ```
 
 El script compila la app, la firma, la instala en `/Applications/Hielo.app` y la abre.
-La primera vez, macOS pedirá los permisos de **Accesibilidad** y **Grabación de pantalla**.
 
 ## Créditos y licencia
 
