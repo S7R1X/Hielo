@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="Ice/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="160" height="160" alt="Icono de Hielo: el Illimani">
+    <img src="Hielo/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="160" height="160" alt="Icono de Hielo: el Illimani">
     <h1>Hielo</h1>
     <p>Gestor de la barra de menús para macOS 27, en español e inglés.</p>
 </div>
@@ -23,6 +23,32 @@ macOS 27, localized to Spanish and English, with a few features of its own.*
   transparente, con control de opacidad.
 - Interfaz en **español** e **inglés**; icono del **Illimani**.
 - Sin actualizaciones automáticas del Ice original (reemplazarían a Hielo).
+
+## Capturas
+
+**La barra con los elementos ocultos** (solo queda el icono de Hielo, el Illimani, junto a los del sistema):
+
+<img src="docs/img/barra-ocultos.png" width="100%" alt="Barra de menús con los elementos ocultos">
+
+**Un clic en el icono y aparecen** (o al pasar el puntero, o al desplazar sobre la barra):
+
+<img src="docs/img/barra-visibles.png" width="100%" alt="Barra de menús con los elementos visibles">
+
+**La Barra de Hielo**: los elementos ocultos en una barra flotante bajo la barra de menús, con fondo como la barra, translúcido o transparente:
+
+<img src="docs/img/barra-de-hielo.png" width="192" alt="Barra de Hielo">
+
+**Organización de la barra**: arrastra cada app a *Visibles*, *Ocultos* o *Siempre ocultos*.
+
+<img src="docs/img/ajustes-organizacion.png" width="720" alt="Ajustes: organización de la barra">
+
+**General**: icono, reloj con fecha, Barra de Hielo y gestos.
+
+<img src="docs/img/ajustes-general.png" width="720" alt="Ajustes: general">
+
+**Apariencia de la barra**: tinte, sombra, borde y forma, por separado para el modo claro y el oscuro.
+
+<img src="docs/img/ajustes-apariencia.png" width="720" alt="Ajustes: apariencia de la barra">
 
 ## Instalar
 
