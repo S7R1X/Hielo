@@ -1,5 +1,5 @@
 included:
-  - Ice
+  - Hielo
 
 disabled_rules:
   - cyclomatic_complexity

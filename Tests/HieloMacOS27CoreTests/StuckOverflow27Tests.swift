@@ -1,6 +1,6 @@
 import CoreGraphics
 import Testing
-@testable import IceMacOS27Core
+@testable import HieloMacOS27Core
 
 @Suite("StuckOverflow27")
 struct StuckOverflow27Tests {

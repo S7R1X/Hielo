@@ -24,8 +24,8 @@ for tool in pointer icebar-ax new-windows input analyze-frames; do
 done
 
 quit_ice() {
-    osascript -e 'tell application id "com.jordanbaird.Ice" to quit' >/dev/null 2>&1 || true
-    for _ in $(seq 1 40); do pgrep -x Ice >/dev/null || return 0; sleep 0.25; done
+    osascript -e 'tell application id "bo.strix.hielo" to quit' >/dev/null 2>&1 || true
+    for _ in $(seq 1 40); do pgrep -x Hielo >/dev/null || return 0; sleep 0.25; done
 }
 activate() { osascript -e "tell application \"$1\" to activate" >/dev/null; sleep 2.5; }
 external_leftmost() {
@@ -33,27 +33,27 @@ external_leftmost() {
     "$WORK/bin/analyze-frames" "$WORK/steady" 700 1220 | awk -v n="$1" '$1 == n { print $2 }'
 }
 as_bool() { case "$1" in 1|true|YES|yes) echo true ;; *) echo false ;; esac; }
-ORIGINAL_ICE_BAR=$(as_bool "$(defaults read com.jordanbaird.Ice UseIceBar 2>/dev/null || echo 1)")
-ORIGINAL_HOVER=$(as_bool "$(defaults read com.jordanbaird.Ice ShowOnHover 2>/dev/null || echo 1)")
+ORIGINAL_ICE_BAR=$(as_bool "$(defaults read bo.strix.hielo UseIceBar 2>/dev/null || echo 1)")
+ORIGINAL_HOVER=$(as_bool "$(defaults read bo.strix.hielo ShowOnHover 2>/dev/null || echo 1)")
 start_ice() {
-    open "$HOME/Applications/Ice.app"
-    for _ in $(seq 1 40); do pgrep -x Ice >/dev/null && return 0; sleep 0.25; done
+    open "$HOME/Applications/Hielo.app"
+    for _ in $(seq 1 40); do pgrep -x Hielo >/dev/null && return 0; sleep 0.25; done
 }
 # Leave Ice running, the way the run found it. A run that ended with Ice down left the
 # machine concealing nothing, and whatever was looked at next showed nothing worth seeing.
 restore() {
     "$WORK/bin/input" escape || true
     quit_ice
-    defaults write com.jordanbaird.Ice UseIceBar -bool "$ORIGINAL_ICE_BAR"
-    defaults write com.jordanbaird.Ice ShowOnHover -bool "$ORIGINAL_HOVER"
+    defaults write bo.strix.hielo UseIceBar -bool "$ORIGINAL_ICE_BAR"
+    defaults write bo.strix.hielo ShowOnHover -bool "$ORIGINAL_HOVER"
     start_ice
 }
 trap restore EXIT
 
 quit_ice
-defaults write com.jordanbaird.Ice UseIceBar -bool true
-defaults write com.jordanbaird.Ice ShowOnHover -bool true
-open "$HOME/Applications/Ice.app"
+defaults write bo.strix.hielo UseIceBar -bool true
+defaults write bo.strix.hielo ShowOnHover -bool true
+open "$HOME/Applications/Hielo.app"
 sleep 10
 activate "$EXT_APP"
 "$WORK/bin/pointer" glide 960 540; "$WORK/bin/pointer" hold 1

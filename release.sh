@@ -58,16 +58,16 @@ git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null && fail "la etiqueta 
 # ---- 1. versión ---------------------------------------------------------------
 step "1/8 Versión $VERSION en el proyecto"
 # Solo el target Ice lleva la versión de la app (X.Y.Z); MenuBarItemService se queda en 1.0.
-CURRENT="$(sed -nE 's/.*MARKETING_VERSION = ([0-9]+\.[0-9]+\.[0-9]+);.*/\1/p' Ice.xcodeproj/project.pbxproj | head -1)"
+CURRENT="$(sed -nE 's/.*MARKETING_VERSION = ([0-9]+\.[0-9]+\.[0-9]+);.*/\1/p' Hielo.xcodeproj/project.pbxproj | head -1)"
 [ -n "$CURRENT" ] || fail "no encuentro la versión actual (MARKETING_VERSION X.Y.Z) en el proyecto"
 [ "$CURRENT" != "$VERSION" ] || fail "el proyecto ya está en la versión $VERSION"
-sed -i '' "s/MARKETING_VERSION = $CURRENT;/MARKETING_VERSION = $VERSION;/g" Ice.xcodeproj/project.pbxproj
-echo "   $CURRENT → $VERSION ($(grep -c "MARKETING_VERSION = $VERSION;" Ice.xcodeproj/project.pbxproj) entradas)"
+sed -i '' "s/MARKETING_VERSION = $CURRENT;/MARKETING_VERSION = $VERSION;/g" Hielo.xcodeproj/project.pbxproj
+echo "   $CURRENT → $VERSION ($(grep -c "MARKETING_VERSION = $VERSION;" Hielo.xcodeproj/project.pbxproj) entradas)"
 
 # ---- 2. compilar --------------------------------------------------------------
 step "2/8 Compilando (unos minutos)"
 LOG="$(mktemp -t hielo-build).log"
-if ! xcodebuild -project Ice.xcodeproj -scheme Ice -configuration Release \
+if ! xcodebuild -project Hielo.xcodeproj -scheme Hielo -configuration Release \
     -derivedDataPath build -destination 'generic/platform=macOS' \
     CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" \
     CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=YES \
@@ -75,7 +75,7 @@ if ! xcodebuild -project Ice.xcodeproj -scheme Ice -configuration Release \
   grep -E "error:" "$LOG" | head -20
   fail "la compilación falló; registro completo en $LOG"
 fi
-SRC="$PROJ/build/Build/Products/Release/Ice.app"
+SRC="$PROJ/build/Build/Products/Release/Hielo.app"
 BUILT="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$SRC/Contents/Info.plist")"
 [ "$BUILT" = "$VERSION" ] || fail "la app compilada dice $BUILT, no $VERSION"
 echo "   BUILD SUCCEEDED ($VERSION)"
@@ -110,8 +110,8 @@ echo "   sha256 $SHA"
 # ---- 5. instalar --------------------------------------------------------------
 if [ "$INSTALL" = 1 ]; then
   step "5/8 Instalando en /Applications/$APP_NAME.app"
-  osascript -e 'quit app id "com.jordanbaird.Ice"' >/dev/null 2>&1 || true
-  for _ in 1 2 3 4 5 6 7 8; do pgrep -x Ice >/dev/null || break; sleep 1; done
+  osascript -e 'quit app id "bo.strix.hielo"' >/dev/null 2>&1 || true
+  for _ in 1 2 3 4 5 6 7 8; do pgrep -x Hielo >/dev/null || break; sleep 1; done
   rm -rf "/Applications/$APP_NAME.app"
   cp -R "$APP" "/Applications/$APP_NAME.app"
   open -a "/Applications/$APP_NAME.app"
@@ -149,7 +149,7 @@ if [ "$DRY" = 1 ]; then
   echo "   Notas que se publicarían:"; sed 's/^/   | /' "$NOTES_FILE"
   echo
   echo "   Deshaciendo el cambio de versión en el proyecto (simulación)."
-  git checkout -- Ice.xcodeproj/project.pbxproj
+  git checkout -- Hielo.xcodeproj/project.pbxproj
   exit 0
 fi
 

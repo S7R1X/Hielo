@@ -1,5 +1,5 @@
 import Testing
-@testable import IceMacOS27Core
+@testable import HieloMacOS27Core
 
 @Suite("SectionLayout27")
 struct SectionLayout27Tests {

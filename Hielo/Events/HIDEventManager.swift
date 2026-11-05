@@ -459,7 +459,7 @@ extension HIDEventManager {
     private static let replayedClickMarker: Int64 = 0x1CE_27_C1C
 
     /// Times the steps of a bridged click, which happen on both opening and closing a panel.
-    private static let bridgeLogger = Logger(subsystem: "com.jordanbaird.Ice", category: "ClickBridge27")
+    private static let bridgeLogger = Logger(subsystem: "bo.strix.hielo", category: "ClickBridge27")
 
     /// Marks Ice's click that makes a display's menu bar active before an item is pressed.
     static let menuBarActivationMarker: Int64 = 0x1CE_27_BA2
@@ -898,7 +898,7 @@ extension HIDEventManager {
     /// Explains in the log why hovering or scrolling did nothing, at most once a second
     /// and only while the pointer is in the menu bar, with each of the tests the gesture
     /// depends on. Read with `log show --info --predicate 'category == "Gestures"'`.
-    private static let gestureLogger = Logger(subsystem: "com.jordanbaird.Ice", category: "Gestures")
+    private static let gestureLogger = Logger(subsystem: "bo.strix.hielo", category: "Gestures")
 
     private func logGestureRejection(
         gesture: String,

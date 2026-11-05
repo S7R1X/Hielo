@@ -10,14 +10,14 @@ cd "$PROJ"
 
 echo "==> 1/5 Compilando (puede tardar unos minutos)..."
 rm -rf build
-xcodebuild -project Ice.xcodeproj -scheme Ice -configuration Release \
+xcodebuild -project Hielo.xcodeproj -scheme Hielo -configuration Release \
   -derivedDataPath build -destination 'generic/platform=macOS' \
   CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" \
   CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=YES \
   -skipPackagePluginValidation -skipMacroValidation \
   clean build | tail -3
 
-SRC="$PROJ/build/Build/Products/Release/Ice.app"
+SRC="$PROJ/build/Build/Products/Release/Hielo.app"
 if [ ! -d "$SRC" ]; then echo "ERROR: no se generó el .app"; exit 1; fi
 
 echo "==> 2/5 Cerrando Ice actual..."
@@ -48,7 +48,7 @@ codesign --verify --deep --strict "$APP" && echo "   firma OK"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist" | sed 's/^/   version: /'
 open -a "$APP"
 sleep 3
-if pgrep -f 'Hielo.app/Contents/MacOS/Ice' >/dev/null; then
+if pgrep -f 'Hielo.app/Contents/MacOS/Hielo' >/dev/null; then
   echo ">>> LISTO: Hielo corriendo en macOS 27"
 else
   echo ">>> Hielo no quedó corriendo; revisa ~/Library/Logs/DiagnosticReports/ por crash logs"

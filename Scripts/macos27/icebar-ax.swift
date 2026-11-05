@@ -38,7 +38,7 @@ func images(in element: AXUIElement, depth: Int = 0) -> [(CGRect, String)] {
     return result
 }
 
-guard let ice = NSRunningApplication.runningApplications(withBundleIdentifier: "com.jordanbaird.Ice").first else {
+guard let ice = NSRunningApplication.runningApplications(withBundleIdentifier: "bo.strix.hielo").first else {
     print("none")
     exit(0)
 }

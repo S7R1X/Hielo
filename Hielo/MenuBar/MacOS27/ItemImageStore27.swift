@@ -49,7 +49,7 @@ final class ItemImageStore27 {
     private let logger = Logger(category: "ItemImageStore27")
     private nonisolated static let processingLogger = Logger(category: "ItemImageStore27")
     private let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("Ice/ItemImages", isDirectory: true)
+        .appendingPathComponent("Hielo/ItemImages", isDirectory: true)
     private var index = [String: IndexEntry]()
     private var loaded = [String: CapturedImage]()
     /// A hash of each glyph stored since launch, so an unchanged one is not stored again.

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "716683292A767E6A006ABF84"
-               BuildableName = "Ice.app"
-               BlueprintName = "Ice"
-               ReferencedContainer = "container:Ice.xcodeproj">
+               BuildableName = "Hielo.app"
+               BlueprintName = "Hielo"
+               ReferencedContainer = "container:Hielo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "716683292A767E6A006ABF84"
-            BuildableName = "Ice.app"
-            BlueprintName = "Ice"
-            ReferencedContainer = "container:Ice.xcodeproj">
+            BuildableName = "Hielo.app"
+            BlueprintName = "Hielo"
+            ReferencedContainer = "container:Hielo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "716683292A767E6A006ABF84"
-            BuildableName = "Ice.app"
-            BlueprintName = "Ice"
-            ReferencedContainer = "container:Ice.xcodeproj">
+            BuildableName = "Hielo.app"
+            BlueprintName = "Hielo"
+            ReferencedContainer = "container:Hielo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

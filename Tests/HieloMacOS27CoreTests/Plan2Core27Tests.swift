@@ -1,7 +1,7 @@
 import CoreGraphics
 import Foundation
 import Testing
-@testable import IceMacOS27Core
+@testable import HieloMacOS27Core
 
 @Suite("Temporary allowances")
 struct TemporaryAllowance27Tests {

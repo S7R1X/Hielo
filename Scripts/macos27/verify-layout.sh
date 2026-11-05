@@ -26,12 +26,12 @@ done
 # again carried any earlier damage forward: a second run saved the already-changed layout
 # as its "before" and restored that, which is how a real layout was lost once.
 as_bool() { case "$1" in 1|true|YES|yes) echo true ;; *) echo false ;; esac; }
-ORIGINAL_ICE_BAR=$(as_bool "$(defaults read com.jordanbaird.Ice UseIceBar 2>/dev/null || echo 1)")
-LAYOUT_BEFORE=$(defaults read com.jordanbaird.Ice MacOS27Layout 2>/dev/null || echo "{}")
+ORIGINAL_ICE_BAR=$(as_bool "$(defaults read bo.strix.hielo UseIceBar 2>/dev/null || echo 1)")
+LAYOUT_BEFORE=$(defaults read bo.strix.hielo MacOS27Layout 2>/dev/null || echo "{}")
 
 quit_ice() {
-    osascript -e 'tell application id "com.jordanbaird.Ice" to quit' >/dev/null 2>&1 || true
-    for _ in $(seq 1 40); do pgrep -x Ice >/dev/null || return 0; sleep 0.25; done
+    osascript -e 'tell application id "bo.strix.hielo" to quit' >/dev/null 2>&1 || true
+    for _ in $(seq 1 40); do pgrep -x Hielo >/dev/null || return 0; sleep 0.25; done
 }
 activate() { osascript -e "tell application \"$1\" to activate" >/dev/null; sleep 2.5; }
 external_leftmost() {
@@ -39,17 +39,17 @@ external_leftmost() {
     "$WORK/bin/analyze-frames" "$WORK/steady" 700 1220 | awk -v n="$1" '$1 == n { print $2 }'
 }
 start_ice() {
-    open "$HOME/Applications/Ice.app"
-    for _ in $(seq 1 40); do pgrep -x Ice >/dev/null && return 0; sleep 0.25; done
+    open "$HOME/Applications/Hielo.app"
+    for _ in $(seq 1 40); do pgrep -x Hielo >/dev/null && return 0; sleep 0.25; done
 }
 # Leave Ice running, the way the run found it. A run that ended with Ice down left the
 # machine concealing nothing, and whatever was looked at next showed nothing worth seeing.
 restore() {
     quit_ice
-    defaults write com.jordanbaird.Ice MacOS27Layout "$LAYOUT_BEFORE"
-    defaults write com.jordanbaird.Ice UseIceBar -bool "$ORIGINAL_ICE_BAR"
+    defaults write bo.strix.hielo MacOS27Layout "$LAYOUT_BEFORE"
+    defaults write bo.strix.hielo UseIceBar -bool "$ORIGINAL_ICE_BAR"
     local after
-    after=$(defaults read com.jordanbaird.Ice MacOS27Layout 2>/dev/null || echo "{}")
+    after=$(defaults read bo.strix.hielo MacOS27Layout 2>/dev/null || echo "{}")
     if [ "$after" = "$LAYOUT_BEFORE" ]; then
         echo "PASS  the saved layout is back as it was"
     else
@@ -61,15 +61,15 @@ restore() {
 trap restore EXIT
 
 quit_ice
-defaults write com.jordanbaird.Ice UseIceBar -bool true
-open "$HOME/Applications/Ice.app"
+defaults write bo.strix.hielo UseIceBar -bool true
+open "$HOME/Applications/Hielo.app"
 sleep 10
 activate "$EXT_APP"
 "$WORK/bin/pointer" glide 960 540; "$WORK/bin/pointer" hold 1
 BEFORE=$(external_leftmost before)
 
 # Reopening Ice shows its settings; select Menu Bar Layout.
-open "$HOME/Applications/Ice.app"
+open "$HOME/Applications/Hielo.app"
 sleep 3
 "$WORK/bin/layout-ax" > "$WORK/settings.txt"
 SIDEBAR=$(awk '/^sidebar/ { print $2, $3; exit }' "$WORK/settings.txt")
@@ -87,19 +87,19 @@ if [ -n "$SOURCE" ] && [ -n "$TARGET" ]; then
     "$WORK/bin/input" drag ${SOURCE} ${TARGET}
 fi
 sleep 3
-STORED=$(defaults read com.jordanbaird.Ice MacOS27Layout | sed -nE "s/^ *\"?${TEST_BUNDLE//./\\.}\"? = ([0-9]);/\1/p")
+STORED=$(defaults read bo.strix.hielo MacOS27Layout | sed -nE "s/^ *\"?${TEST_BUNDLE//./\\.}\"? = ([0-9]);/\1/p")
 "$WORK/bin/input" close-window
 sleep 3
 activate "$EXT_APP"
 "$WORK/bin/pointer" glide 960 540; "$WORK/bin/pointer" hold 1
 AFTER_CLOSE=$(external_leftmost after-close)
 quit_ice
-open "$HOME/Applications/Ice.app"
+open "$HOME/Applications/Hielo.app"
 sleep 10
 activate "$EXT_APP"
 "$WORK/bin/pointer" glide 960 540; "$WORK/bin/pointer" hold 1
 AFTER_RESTART=$(external_leftmost after-restart)
-STORED_AFTER_RESTART=$(defaults read com.jordanbaird.Ice MacOS27Layout | sed -nE "s/^ *\"?${TEST_BUNDLE//./\\.}\"? = ([0-9]);/\1/p")
+STORED_AFTER_RESTART=$(defaults read bo.strix.hielo MacOS27Layout | sed -nE "s/^ *\"?${TEST_BUNDLE//./\\.}\"? = ([0-9]);/\1/p")
 
 echo "before=$BEFORE layout-open=$OPEN_LEFTMOST after-close=$AFTER_CLOSE after-restart=$AFTER_RESTART stored=${STORED:-none} stored-after-restart=${STORED_AFTER_RESTART:-none}"
 FAILED=0
