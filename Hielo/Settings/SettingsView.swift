@@ -83,6 +83,13 @@ struct SettingsView: View {
             .collapsible(false)
         }
         .scrollDisabled(true)
+        .safeAreaInset(edge: .bottom) {
+            // A small Bolivian flag, Hielo's home, at the foot of the sidebar.
+            BoliviaFlag(width: 22)
+                .padding(.horizontal, sidebarPadding + 8)
+                .padding(.bottom, 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
         .toolbar(removing: .sidebarToggle)
         .toolbar {
             sidebarToolbarSpacer
@@ -121,8 +128,10 @@ struct SettingsView: View {
         if #available(macOS 26.0, *) {
             settingsPane
                 .scrollEdgeEffectStyle(.hard, for: .top)
+                .background { HieloBackdrop() }
         } else {
             settingsPane
+                .background { HieloBackdrop() }
         }
     }
 

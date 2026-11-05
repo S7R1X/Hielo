@@ -99,6 +99,9 @@ struct AboutSettingsPane: View {
                         Text("Ice on GitHub (GNU GPL v3)")
                             .font(.system(size: 13))
                     }
+
+                    BoliviaFlag(width: 24)
+                        .padding(.top, 10)
                 }
                 .fontWeight(.medium)
             }
