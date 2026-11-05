@@ -110,6 +110,12 @@ crea la Release en GitHub con el zip y actualiza el cask de Homebrew. `--notes a
 usa tus propias notas (si no, se generan de los commits), `--no-install` no toca
 `/Applications`, y `--dry-run` hace todo menos git y GitHub, para probar.
 
+## Apoyar el proyecto
+
+Si Hielo te resulta útil, puedes invitarme a un café:
+
+<a href="https://buymeacoffee.com/s7rix"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-s7rix-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
+
 ## Créditos y licencia
 
 - **Hielo** — © 2026 Mauricio Chumacero.

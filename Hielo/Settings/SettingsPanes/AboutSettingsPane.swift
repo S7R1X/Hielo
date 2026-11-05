@@ -13,6 +13,12 @@ struct AboutSettingsPane: View {
         Bundle.main.url(forResource: "Acknowledgements", withExtension: "pdf")!
     }
 
+    /// Where to support Hielo's author.
+    private var coffeeURL: URL {
+        // swiftlint:disable:next force_unwrapping
+        URL(string: "https://buymeacoffee.com/s7rix")!
+    }
+
     private var lastUpdateCheckString: String {
         if let date = updatesManager.lastUpdateCheckDate {
             date.formatted(date: .abbreviated, time: .standard)
@@ -157,6 +163,9 @@ struct AboutSettingsPane: View {
             Spacer()
             Button("Acknowledgements") {
                 NSWorkspace.shared.open(acknowledgementsURL)
+            }
+            Button("Buy me a coffee", systemImage: "cup.and.saucer.fill") {
+                NSWorkspace.shared.open(coffeeURL)
             }
         }
         .padding(8)
