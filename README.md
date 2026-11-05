@@ -63,6 +63,14 @@ bash build_install.sh
 
 El script compila la app, la firma, la instala en `/Applications/Hielo.app` y la abre.
 
+## Actualizaciones
+
+Hielo busca actualizaciones por sí mismo (con Sparkle) en el archivo
+[`appcast.xml`](appcast.xml) de este repositorio, y las verifica con la clave pública que
+lleva dentro (`SUPublicEDKey`). En *Acerca de* puedes activar la comprobación y la descarga
+automáticas, o pulsar **Buscar actualizaciones**. `release.sh` firma cada versión con la
+clave privada del llavero y la añade al appcast.
+
 ## Publicar una versión
 
 Con el árbol de git limpio, `gh` con sesión iniciada y el tap clonado en `../homebrew-tap`:

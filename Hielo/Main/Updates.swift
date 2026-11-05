@@ -18,11 +18,12 @@ final class UpdatesManager: NSObject, ObservableObject {
     /// The shared app state.
     private(set) weak var appState: AppState?
 
-    /// Whether Hielo looks for updates. It does not: Hielo is built from its own source,
-    /// and the feed it inherited is upstream Ice's, whose updates would install official
-    /// Ice over Hielo and lose every change. Sparkle is never started, every way of asking
-    /// for a check returns at once, and the feed is gone from the Info.plist.
-    static let isEnabled = false
+    /// Whether Hielo looks for updates. It does, from its own appcast in the Hielo
+    /// repository (`SUFeedURL` in the Info.plist), signed with Hielo's own EdDSA key
+    /// (`SUPublicEDKey`); `release.sh` signs each release and adds it to the appcast.
+    /// Set to `false` to build a version that never checks, which also hides the
+    /// "Check for Updates…" menu item and the update settings in the About pane.
+    static let isEnabled = true
 
     /// The underlying updater controller.
     private(set) lazy var updaterController = SPUStandardUpdaterController(
