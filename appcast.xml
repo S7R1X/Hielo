@@ -3,6 +3,28 @@
     <channel>
         <title>Hielo</title>
         <item>
+            <title>1.2.2</title>
+            <pubDate>Sat, 07 Nov 2026 12:53:14 -0400</pubDate>
+            <link>https://github.com/S7R1X/Hielo</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/S7R1X/Hielo/releases/tag/v1.2.2</sparkle:fullReleaseNotesLink>
+            <sparkle:version>1125</sparkle:version>
+            <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<html><body>
+<h2>Correcciones</h2>
+<li><b>Wi‑Fi y batería</b>: al hacer clic en sus iconos ya no aparecen de golpe todas las apps ocultas. El panel se abre por Accesibilidad con la barra intacta (el reloj sigue necesitando un destello breve: macOS no le acepta esa vía).</li>
+<li>Un clic que llega mientras otro se está gestionando se descarta, en vez de solaparse.</li>
+
+<h2>Instalación</h2>
+<li><b>Homebrew:</b> <code>brew tap S7R1X/tap && brew trust S7R1X/tap && brew install --cask hielo</code></li>
+<li><b>Manual:</b> descarga <code>Hielo-1.2.2.zip</code>, descomprímelo y mueve <code>Hielo.app</code> a Aplicaciones.</li>
+
+<p><em>Hielo no está notarizado por Apple. La primera vez: clic derecho sobre la app → <b>Abrir</b> → <b>Abrir</b>. Después concede los permisos de <b>Accesibilidad</b> y <b>Grabación de pantalla</b>.</em></p>
+</body></html>
+]]></description>
+            <enclosure url="https://github.com/S7R1X/Hielo/releases/download/v1.2.2/Hielo-1.2.2.zip" length="5343605" type="application/octet-stream" sparkle:edSignature="ApunaPjZn9dojbGKbM5F8rl/cRpvwgOJw2BMaR+q8fCZUo1+mzWA4B5z8iRkGOWHe23J+YfyyCNDcngj2E1HAA=="/>
+        </item>
+        <item>
             <title>1.2.1</title>
             <pubDate>Wed, 04 Nov 2026 23:39:39 -0400</pubDate>
             <link>https://github.com/S7R1X/Hielo</link>
@@ -44,29 +66,6 @@
 </body></html>
 ]]></description>
             <enclosure url="https://github.com/S7R1X/Hielo/releases/download/v1.2.0/Hielo-1.2.0.zip" length="5338799" type="application/octet-stream" sparkle:edSignature="KNntchwX+Zj8MjzIlZ+zDupE1gdkNUhswHVubD4RBqSqYqSaLlaX+f32uUrPz2gcmziIFwS69Yap3haFhCu+Cw=="/>
-        </item>
-        <item>
-            <title>1.1.0</title>
-            <pubDate>Wed, 04 Nov 2026 22:38:47 -0400</pubDate>
-            <link>https://github.com/S7R1X/Hielo</link>
-            <sparkle:fullReleaseNotesLink>https://github.com/S7R1X/Hielo/releases/tag/v1.1.0</sparkle:fullReleaseNotesLink>
-            <sparkle:version>1122</sparkle:version>
-            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<html><body>
-<h2>Novedades</h2>
-<li>Hielo tiene identidad propia: identificador <code>bo.strix.hielo</code>, proyecto y ejecutable <code>Hielo</code>. Al actualizar desde 1.0.0, macOS pedirá de nuevo los permisos de Accesibilidad y Grabación de pantalla (una sola vez).</li>
-<li>Actualizaciones automáticas desde este repositorio: en *Acerca de* puedes activarlas o pulsar <b>Buscar actualizaciones</b>.</li>
-<li>Créditos: © 2026 Mauricio Chumacero; basado en Ice (Jordan Baird, GNU GPL v3).</li>
-
-<h2>Instalación</h2>
-<li><b>Homebrew:</b> <code>brew tap S7R1X/tap && brew trust S7R1X/tap && brew install --cask hielo</code></li>
-<li><b>Manual:</b> descarga <code>Hielo-1.1.0.zip</code>, descomprímelo y mueve <code>Hielo.app</code> a Aplicaciones.</li>
-
-<p><em>Hielo no está notarizado por Apple. La primera vez: clic derecho sobre la app → <b>Abrir</b> → <b>Abrir</b>. Después concede los permisos de <b>Accesibilidad</b> y <b>Grabación de pantalla</b>.</em></p>
-</body></html>
-]]></description>
-            <enclosure url="https://github.com/S7R1X/Hielo/releases/download/v1.1.0/Hielo-1.1.0.zip" length="5305251" type="application/octet-stream" sparkle:edSignature="+1P4JIq8WfeV0jiqXFT1au3WWwbmJFnmvbh4OS6T6S/ZPdRlanOS+aSfz5z5kzU4PFHyGpu/eIgNtMXNdgfODw=="/>
         </item>
     </channel>
 </rss>
