@@ -20,10 +20,13 @@ xcodebuild -project Hielo.xcodeproj -scheme Hielo -configuration Release \
 SRC="$PROJ/build/Build/Products/Release/Hielo.app"
 if [ ! -d "$SRC" ]; then echo "ERROR: no se generó el .app"; exit 1; fi
 
-echo "==> 2/5 Cerrando Ice actual..."
-killall Ice 2>/dev/null || true
+echo "==> 2/5 Cerrando Hielo actual..."
+osascript -e 'quit app id "bo.strix.hielo"' >/dev/null 2>&1 || true
+for _ in $(seq 1 20); do pgrep -x Hielo >/dev/null || break; sleep 0.25; done
+killall Hielo 2>/dev/null || true
 killall MenuBarItemService 2>/dev/null || true
-sleep 2
+sleep 1
+if pgrep -x Hielo >/dev/null; then echo "ERROR: Hielo sigue en ejecución"; exit 1; fi
 
 echo "==> 3/5 Instalando en /Applications..."
 rm -rf "$APP"

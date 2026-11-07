@@ -472,11 +472,17 @@ extension HIDEventManager {
     /// System items that do not open from an Accessibility press, so a click on them has to
     /// go through MenuBarAgent. Seeded with what was measured on macOS 27.0; anything else
     /// that turns out to ignore the press joins them at its first click.
+    ///
+    /// Measured on macOS 27.0 (2026-11-07, `AXPress` on the `AXMenuExtra` element inside
+    /// MenuBarAgent's hosting group, concealment live): Wi-Fi presents its panel in 113–175 ms
+    /// and the battery in 108–116 ms, with nothing hidden brought back on screen — Control
+    /// Centre's own log shows "present WiFi" / "present Battery". Only the clock ignores it.
     private nonisolated(unsafe) static var systemItemsIgnoringPress: Set<String> = [
         "com.apple.menuextra.clock",
-        "com.apple.menuextra.battery",
-        "com.apple.menuextra.wifi",
     ]
+
+    /// Whether a click on a system item is being bridged right now.
+    private nonisolated(unsafe) static var bridgeInFlight = false
 
     /// The system item whose panel Ice last opened, so a second click on the same item is
     /// understood as the click that dismisses it.
@@ -523,7 +529,17 @@ extension HIDEventManager {
         // fixed second and a half, which is what made every hidden item flash into view.
         let systemItem = MenuBarItemProvider27.systemItem(at: location)
         let mayOpenFromPress = systemItem.map { !Self.systemItemsIgnoringPress.contains($0.identifier) } ?? false
+        // A click that lands while the previous one is still being bridged would start a
+        // second bridge over the first (seen on macOS 27.0: three overlapping tasks, and the
+        // panel the first one opened credited to the third), so it is dropped.
+        guard !Self.bridgeInFlight else {
+            Self.bridgeLogger.notice("Click bridge: click dropped, a bridge is in flight")
+            heldBackReleaseUntil = .now + .seconds(1)
+            return nil
+        }
+        Self.bridgeInFlight = true
         Task {
+            defer { Self.bridgeInFlight = false }
             // A click that lands while a panel is up is the click that dismisses it, and
             // Escape dismisses it just as well — with no lift of concealment at all. Lifting
             // for such a click brought every hidden item back on screen first, and the panel
@@ -539,18 +555,37 @@ extension HIDEventManager {
                 // A different system item was clicked, so its own panel still has to open.
                 try? await Task.sleep(for: Self.panelDismissWait)
             }
-            if mayOpenFromPress, let systemItem {
-                let baseline = Self.windowNumbers()
-                await Self.press(systemItem.element)
-                if await Self.waitForPanel(baseline: baseline, pollsOf50ms: 5) {
-                    // Remembered here as well, or the next click on this item would dismiss
-                    // its panel and open it again in the same breath.
-                    Self.itemShowingPanel = systemItem.identifier
-                    return
+            if let systemItem {
+                // Each Accessibility action is tried once per item while Ice runs: waiting
+                // for a panel that never comes only delays the click, so an item that
+                // ignored an action is not asked it again.
+                var attempts: [(action: String, element: AXUIElement, remember: () -> Void)] = []
+                if mayOpenFromPress {
+                    attempts.append((kAXPressAction, systemItem.element, {
+                        Self.systemItemsIgnoringPress.insert(systemItem.identifier)
+                    }))
                 }
-                // Waiting for a panel that never comes only delays the click, so an item
-                // that ignored the press is not asked again while Ice runs.
-                Self.systemItemsIgnoringPress.insert(systemItem.identifier)
+                // "Show menu" is never asked: on the Wi-Fi item it blocks for 1.5 s and
+                // returns kAXErrorCannotComplete (measured 2026-11-07).
+                for attempt in attempts {
+                    let baseline = Self.windowNumbers()
+                    let result = await Self.perform(attempt.action, on: attempt.element)
+                    // An action the item rejected opens nothing, so there is nothing to wait
+                    // for; one it accepted is given up to a second (a "show menu" on Wi-Fi is
+                    // accepted, and 250 ms was not enough to tell whether it answers).
+                    let polls = result == .success ? 20 : 0
+                    if polls > 0, await Self.waitForPanel(baseline: baseline, pollsOf50ms: polls) {
+                        Self.bridgeLogger.notice("Click bridge: \(systemItem.identifier, privacy: .public) opened from \(attempt.action, privacy: .public), no lift")
+                        // Remembered here as well, or the next click on this item would dismiss
+                        // its panel and open it again in the same breath.
+                        Self.itemShowingPanel = systemItem.identifier
+                        return
+                    }
+                    Self.bridgeLogger.notice("Click bridge: \(systemItem.identifier, privacy: .public) ignored \(attempt.action, privacy: .public) (AXError \(result.rawValue, privacy: .public))")
+                }
+                for attempt in attempts {
+                    attempt.remember()
+                }
             }
             // The click is replayed the moment the assertion is really gone rather than on a
             // timer: releasing it queues behind other concealment work, and MenuBarAgent ignores
@@ -677,12 +712,11 @@ extension HIDEventManager {
         return false
     }
 
-    /// Presses an Accessibility element off the main thread, which the call can block.
-    private static func press(_ element: AXUIElement) async {
+    /// Performs an Accessibility action off the main thread, which the call can block.
+    private static func perform(_ action: String, on element: AXUIElement) async -> AXError {
         await withCheckedContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
-                _ = AXUIElementPerformAction(element, kAXPressAction as CFString)
-                continuation.resume()
+                continuation.resume(returning: AXUIElementPerformAction(element, action as CFString))
             }
         }
     }
