@@ -545,8 +545,8 @@ extension HIDEventManager {
             // for such a click brought every hidden item back on screen first, and the panel
             // only answered once MenuBarAgent had finished moving the bar: the icons appeared,
             // and the panel closed late behind them.
-            if ItemClick27.openPanelWindow(windows: Self.windowsForPanelCheck()) != nil {
-                Self.postEscape()
+            if let panel = ItemClick27.openPanelWindow(windows: Self.windowsForPanelCheck()) {
+                Self.postEscape(toOwnerOf: panel)
                 Self.bridgeLogger.debug("Click bridge: a panel was open, dismissed with Escape")
                 guard systemItem?.identifier != Self.itemShowingPanel else {
                     Self.itemShowingPanel = nil
@@ -689,15 +689,27 @@ extension HIDEventManager {
     /// clicked is given its own turn.
     private static let panelDismissWait = Duration.milliseconds(120)
 
-    /// Presses Escape, which dismisses an open system panel.
+    /// Presses Escape for the process that drew the given panel window, which dismisses it.
     ///
     /// Notification Center and Control Centre both answer it while items stay concealed, so a
-    /// click that dismisses a panel needs no lift of concealment at all.
-    private static func postEscape() {
+    /// click that dismisses a panel needs no lift of concealment at all. The key goes to that
+    /// process alone (measured on macOS 27.0, 2026-11-08: both dismiss their panel from a key
+    /// posted to their pid). Posted to the system instead, the frontmost application received
+    /// it as well: a stray Escape that cancelled whatever it was doing.
+    private static func postEscape(toOwnerOf window: Int) {
+        let pids = ownerPID(ofWindow: window).map { [$0] } ?? Array(panelOwnerPIDs)
         let source = CGEventSource(stateID: .hidSystemState)
-        for down in [true, false] {
-            CGEvent(keyboardEventSource: source, virtualKey: 53, keyDown: down)?.post(tap: .cghidEventTap)
+        for pid in pids {
+            for down in [true, false] {
+                CGEvent(keyboardEventSource: source, virtualKey: 53, keyDown: down)?.postToPid(pid)
+            }
         }
+    }
+
+    /// The process that owns the given window, if it is still on screen.
+    private static func ownerPID(ofWindow number: Int) -> pid_t? {
+        let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly], kCGNullWindowID) as? [[String: Any]] ?? []
+        return windows.first { $0[kCGWindowNumber as String] as? Int == number }?[kCGWindowOwnerPID as String] as? pid_t
     }
 
     /// Waits for a system item's panel to appear.

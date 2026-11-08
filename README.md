@@ -110,6 +110,15 @@ crea la Release en GitHub con el zip y actualiza el cask de Homebrew. `--notes a
 usa tus propias notas (si no, se generan de los commits), `--no-install` no toca
 `/Applications`, y `--dry-run` hace todo menos git y GitHub, para probar.
 
+## Limitaciones conocidas
+
+- Al hacer clic en el **reloj** de macOS con elementos ocultos, estos aparecen alrededor de un
+  segundo mientras se abre el Centro de notificaciones: macOS ignora ese clic mientras hay elementos
+  ocultos y la única forma de atenderlo es mostrarlos un instante. Wi‑Fi, batería y Centro de control
+  se abren sin ese destello. Sin destello: el gesto de dos dedos desde el borde derecho del trackpad.
+- Al hacer clic en un icono de la **Barra de Hielo**, su menú se abre en la barra de menús y no bajo
+  la Barra de Hielo: lo dibuja la otra app, anclado a su icono.
+
 ## Apoyar el proyecto
 
 Si Hielo te resulta útil, puedes invitarme a un café:
