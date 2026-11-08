@@ -4,7 +4,7 @@
 # relanza. Con ese certificado los permisos de macOS se conservan entre builds.
 set -e
 
-PROJ="/Users/mau/Projects/Strix/Ice-1001"
+PROJ="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP="/Applications/Hielo.app"
 cd "$PROJ"
 
